@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-cool-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-cool-service
+  template:
+    metadata:
+      labels:
+        app: my-cool-service
+    spec:
+      containers:
+      - name: my-cool-service
+        image: deepakgkcang/my-cool-service:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: users-secret
+              key: SECRET_KEY

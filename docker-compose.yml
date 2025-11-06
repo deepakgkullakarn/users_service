@@ -1,0 +1,17 @@
+version: "3.13.9"
+
+services:
+  fastapi:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - opa
+
+  opa:
+    image: openpolicyagent/opa:latest
+    ports:
+      - "8181:8181"
+    command: ["run", "--server", "/policies"]
+    volumes:
+      - ./opa:/policies
